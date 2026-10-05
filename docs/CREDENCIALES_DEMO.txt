@@ -1,0 +1,12 @@
+PARKIA EMI UALP - CREDENCIALES ACADÉMICAS DE DEMOSTRACIÓN
+
+Administrador: admin / PARKIA2026!Admin
+Dirección de Grado: director / PARKIA2026!Dir
+Jefe de Operaciones: operaciones / PARKIA2026!Ops
+Personal de Guardia: guardia / PARKIA2026!Seg
+Soporte TIC: soporte / PARKIA2026!Tic
+Infraestructura: infraestructura / PARKIA2026!Infra
+Recursos Humanos: rrhh / PARKIA2026!RRHH
+Estudiante: estudiante / PARKIA2026!Est
+
+NOTA: Son credenciales de demostración. Cambiarlas antes de cualquier despliegue real.

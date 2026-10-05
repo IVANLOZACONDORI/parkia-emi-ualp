@@ -1,0 +1,2 @@
+import {app} from './app.js';import {env} from './config/env.js';import {query} from './config/db.js';import {asegurarUsuariosDemo} from './modules/autenticacion/bootstrap.service.js';
+async function iniciar(){try{await query('SELECT 1');await asegurarUsuariosDemo();app.listen(env.port,()=>console.log(`PARKIA EMI UALP disponible en http://localhost:${env.port}`))}catch(error){console.error('No se pudo iniciar PARKIA:',error);process.exit(1)}}iniciar();

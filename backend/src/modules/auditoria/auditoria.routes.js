@@ -1,0 +1,2 @@
+import {Router} from 'express';import {query} from '../../config/db.js';import {authenticate,requirePermission} from '../../middleware/auth.js';import {asyncHandler} from '../../utils/asyncHandler.js';
+export const auditoriaRouter=Router();auditoriaRouter.use(authenticate,requirePermission('auditoria.ver'));auditoriaRouter.get('/',asyncHandler(async(req,res)=>{const r=await query(`SELECT a.*,u.nombre_usuario,u.nombre_completo FROM auditoria a LEFT JOIN usuarios u ON u.id=a.usuario_id ORDER BY a.creado_en DESC LIMIT 1000`);res.json(r.rows)}));

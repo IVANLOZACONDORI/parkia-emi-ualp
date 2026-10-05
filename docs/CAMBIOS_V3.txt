@@ -1,0 +1,12 @@
+PARKIA EMI UALP - CAMBIOS V3
+============================
+
+1. La página inicial (/) muestra únicamente identidad y logo EMI UALP.
+2. PARKIA no aparece en la página inicial ni en la página general de Infraestructura.
+3. Nueva ruta /infraestructura con identidad EMI.
+4. Desde Infraestructura se selecciona "Sistema inteligente de parqueos".
+5. Nueva ruta /parqueos: recién aquí aparece el logo PARKIA, descripción, funciones y mapa demostrativo.
+6. El login PARKIA permanece en /login y vuelve a /parqueos.
+7. Se incorporan RF-53, RF-54, RF-55, RNF-30 y RNF-31.
+8. Se actualizan documentación V3, requisitos, Capítulo I, diccionario de datos y manual.
+9. Se mantiene PostgreSQL en castellano, control LPR/OCR, cámaras de ocupación y rol ESTUDIANTE restringido al sector trasero.

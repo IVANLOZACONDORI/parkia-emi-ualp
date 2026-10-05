@@ -1,0 +1,12 @@
+{
+  "name": "parkia-emi-ualp",
+  "version": "3.0.0",
+  "private": true,
+  "description": "PARKIA EMI UALP V3 - Sistema de gestión de parqueos con visión artificial, roles y PostgreSQL en castellano",
+  "scripts": {
+    "start": "npm --prefix backend start",
+    "dev": "npm --prefix backend run dev",
+    "install:all": "npm --prefix backend install",
+    "db:schema": "psql \"$DATABASE_URL\" -f backend/sql/01_schema.sql -f backend/sql/02_seed.sql -f backend/sql/03_views_functions.sql"
+  }
+}
