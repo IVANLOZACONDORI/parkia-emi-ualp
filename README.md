@@ -1,29 +1,48 @@
-# PARKIA EMI UALP - Versión 2
-Sistema de gestión de parqueos mediante visión artificial e Internet de las Cosas, caso EMI UALP.
+# PARKIA EMI UALP — Versión 4
 
-## Cambios principales de esta versión
-- Base de datos PostgreSQL con tablas y campos en castellano.
-- Ingreso vehicular controlado por **una cámara de visión artificial LPR/OCR** que lee placas y valida autorizaciones.
-- Cámaras de parqueo dedicadas exclusivamente a determinar plaza **LIBRE/OCUPADA**.
-- Nuevo rol **ESTUDIANTE**, limitado a la **Zona Estudiantes - Sector Trasero EMI UALP**.
-- El estudiante sólo ve disponibilidad, cantidad de espacios libres y mapa de su zona. No ve placas, vehículos, usuarios, otras zonas, alertas internas ni administración.
-- Interfaces por rol: cada actor visualiza únicamente los módulos que le corresponden.
+Sistema institucional de gestión de parqueos para la EMI UALP. Esta versión refuerza especialmente el módulo **Inicio de sesión y autenticación** para cumplir los requisitos RF-01 a RF-04 y RNF-01 a RNF-03.
 
-## Inicio rápido
-> Si ejecutaste una versión anterior, elimina primero el volumen para recrear la BD con el esquema en castellano:
+## Mejoras principales V4
+
+- Inicio de sesión obligatorio con **usuario + contraseña + CAPTCHA**.
+- Identificación automática del rol; el usuario no elige manualmente su perfil.
+- Menú construido según permisos vigentes y verificación de permisos también en el servidor.
+- Cierre de sesión con revocación de la sesión activa.
+- Bloqueo temporal configurable después de varios intentos fallidos.
+- Contraseñas almacenadas mediante hash con sal aleatoria y comparación segura.
+- CAPTCHA con expiración y renovación desde la pantalla de acceso.
+- Validación de la sesión contra el estado actual de la cuenta, rol y permisos.
+- Login responsive para computadora, tablet y celular.
+- Índices de consulta para agilizar la validación del usuario y de sesiones.
+- La interfaz pública ya no muestra nombres de motores, bases de datos ni detalles internos de implementación.
+- Actualización del Service Worker a V4 para evitar que el navegador conserve la interfaz anterior en caché.
+
+## Inicio rápido con Docker
 
 ```bash
-docker compose down -v
 docker compose up --build
 ```
 
-Abrir: http://localhost:4000
-Login: http://localhost:4000/login
-Salud API: http://localhost:4000/api/salud
+Abrir:
 
-## Usuario estudiante de demostración
-- Usuario: `estudiante`
-- Contraseña: `PARKIA2026!Est`
-- Zona: `Zona Estudiantes - Sector Trasero`
+- Portal institucional: `http://localhost:4000`
+- PARKIA: `http://localhost:4000/parqueos`
+- Login: `http://localhost:4000/login`
 
-Las demás credenciales se encuentran en `docs/CREDENCIALES_DEMO.txt`.
+Si se reutiliza una instalación V3 existente, la aplicación crea automáticamente la estructura adicional de autenticación al iniciar. No es obligatorio borrar el volumen para actualizar el módulo de autenticación.
+
+## Credenciales de demostración
+
+Consulte `docs/CREDENCIALES_DEMO.txt`.
+
+## Evidencia de cumplimiento
+
+Consulte:
+
+- `docs/VERIFICACION_AUTENTICACION_V4.md`
+- `docs/ACTUALIZAR_GITHUB_PASO_A_PASO.md`
+- `docs/CAMBIOS_V4.txt`
+
+## Recomendación para producción
+
+Antes de publicar en un servidor real, cambie los secretos definidos en las variables de entorno y utilice HTTPS. No publique archivos `.env` con claves reales.

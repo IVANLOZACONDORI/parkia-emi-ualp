@@ -12,7 +12,7 @@
 | Estudiante | Únicamente `Mi parqueo`: Zona Estudiantes - Sector Trasero, espacios libres y mapa en tiempo real |
 
 
-## Navegación pública V3
+## Navegación pública V4
 
 | Nivel | Identidad visible | Ruta | Acción |
 |---|---|---|---|

@@ -1,6 +1,6 @@
-# Matriz de requisitos e implementación PARKIA V3
+# Matriz de requisitos e implementación PARKIA V4
 
-> Versión actualizada: portal inicial con identidad EMI, acceso jerárquico Infraestructura → Parqueos → PARKIA, base de datos en castellano, cámara LPR/OCR para acceso, cámaras de ocupación separadas y rol ESTUDIANTE restringido al sector trasero.
+> Versión actualizada: portal inicial con identidad EMI, acceso jerárquico Infraestructura → Parqueos → PARKIA, autenticación V4 reforzada, cámara LPR/OCR para acceso, cámaras de ocupación separadas y rol ESTUDIANTE restringido al sector trasero.
 
 ## 1. Inicio de sesión y autenticación
 **Responsable:** Tte. Ing. Iván Loza Condori
@@ -15,6 +15,8 @@
 - **RNF-01** Las contraseñas se almacenan protegidas y nunca en texto plano.
 - **RNF-02** El login debe funcionar en computadora, tablet y celular.
 - **RNF-03** La validación debe responder de forma ágil en la red institucional.
+
+**Estado V4:** CUMPLIDO. Evidencia técnica y pruebas en `docs/VERIFICACION_AUTENTICACION_V4.md`. La interfaz visible al usuario no expone detalles internos de almacenamiento o tecnologías de implementación.
 
 ## 2. Usuarios, roles y permisos
 **Responsable:** Tte. Ing. Iván Loza Condori

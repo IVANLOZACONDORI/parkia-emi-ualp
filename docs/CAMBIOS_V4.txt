@@ -1,0 +1,16 @@
+PARKIA EMI UALP V4 - CAMBIOS DEL MODULO DE AUTENTICACION
+
+1. RF-01 reforzado: usuario + contraseña + CAPTCHA obligatorios.
+2. RF-02 reforzado: el rol no se selecciona; se verifica en servidor y se construye el menú con permisos vigentes.
+3. RF-03 reforzado: logout real con revocación de la sesión activa.
+4. RF-04 reforzado: bloqueo temporal configurable y respuesta HTTP 423 con tiempo restante.
+5. RNF-01: se mantiene almacenamiento protegido mediante hash con sal y comparación segura.
+6. RNF-02: login rediseñado para escritorio, tablet y móvil.
+7. RNF-03: consulta de autenticación optimizada e índices específicos para usuario y sesión.
+8. El login comprueba la sesión existente antes de redirigir al sistema.
+9. El sistema valida la cuenta, rol y permisos actuales en cada solicitud protegida.
+10. Se añadió tabla de sesiones autenticadas para poder invalidar tokens al cerrar sesión.
+11. Se eliminó de las páginas públicas cualquier referencia visible al motor de datos o a detalles de implementación interna.
+12. Se añadió mostrar/ocultar contraseña, aviso de Bloq Mayús, estado de carga, renovación de CAPTCHA y contador de bloqueo.
+13. Se actualizó el Service Worker a caché V4 para que el navegador no conserve la interfaz V3.
+14. La actualización es compatible con una base existente: al iniciar se crea la estructura adicional si aún no existe.

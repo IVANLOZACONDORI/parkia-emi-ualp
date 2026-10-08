@@ -1,4 +1,4 @@
-# Manual de instalación - PARKIA EMI UALP V3
+# Manual de instalación - PARKIA EMI UALP V4
 
 ## 1. Requisitos
 - Windows 10/11, Linux o macOS.
@@ -7,7 +7,7 @@
 
 ## 2. Puesta en marcha
 1. Descomprimir el proyecto.
-2. Abrir CMD/PowerShell/Terminal dentro de la carpeta `PARKIA_EMI_UALP_V3`.
+2. Abrir CMD/PowerShell/Terminal dentro de la carpeta `PARKIA_EMI_UALP_V4_RF01_RF04`.
 3. Si existe una versión local anterior y se desea reiniciar los datos de prueba, ejecutar `docker compose down -v`.
 4. Ejecutar `docker compose up --build`.
 5. Esperar a que los contenedores de aplicación y PostgreSQL estén activos.

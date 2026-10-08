@@ -1,8 +1,8 @@
 {
   "name": "parkia-emi-ualp",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
-  "description": "PARKIA EMI UALP V3 - Sistema de gestión de parqueos con visión artificial, roles y PostgreSQL en castellano",
+  "description": "PARKIA EMI UALP V4 - Sistema institucional de gestión de parqueos con autenticación reforzada y control por roles",
   "scripts": {
     "start": "npm --prefix backend start",
     "dev": "npm --prefix backend run dev",

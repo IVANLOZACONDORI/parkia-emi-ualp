@@ -8,6 +8,8 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
   captchaSecret: process.env.CAPTCHA_SECRET || 'captcha-dev-secret-change-me',
   captchaExpiresIn: process.env.CAPTCHA_EXPIRES_IN || '5m',
+  loginMaxAttempts: Number(process.env.LOGIN_MAX_ATTEMPTS || 5),
+  loginLockMinutes: Number(process.env.LOGIN_LOCK_MINUTES || 15),
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:4000',
   allowBackupCommands: String(process.env.ALLOW_BACKUP_COMMANDS || 'false').toLowerCase() === 'true',
   backupDir: process.env.BACKUP_DIR || './backups',

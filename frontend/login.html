@@ -1,1 +1,83 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ingreso PARKIA UALP</title><link rel="stylesheet" href="/css/base.css"><link rel="stylesheet" href="/css/app.css"><link rel="manifest" href="/manifest.webmanifest"></head><body><main class="login-shell"><section class="login-visual"><div><div class="eyebrow">PÁGINA WEB INSTITUCIONAL · SISTEMA DE PARQUEOS</div><h1>Ingreso seguro por roles</h1><p>Autenticación controlada mediante tres variables: usuario, contraseña y CAPTCHA. El rol no se selecciona manualmente; se obtiene de la base de datos para mostrar únicamente los módulos y acciones autorizados.</p></div></section><section class="login-panel"><div class="card login-card"><a href="/parqueos"><img class="logo" src="/assets/logo/parkia-logo.svg" alt="PARKIA UALP"></a><h2>Acceso institucional</h2><p style="color:#64748b">Ingrese sus credenciales para continuar.</p><div id="error" class="error hidden"></div><form id="loginForm"><div class="field"><label for="username">USUARIO</label><input id="username" name="username" autocomplete="username" required placeholder="Ej. operaciones"></div><div class="field" style="margin-top:.9rem"><label for="password">CONTRASEÑA</label><input id="password" type="password" name="password" autocomplete="current-password" required placeholder="••••••••••"></div><div class="field" style="margin-top:.9rem"><label>CONFIRMACIÓN · CAPTCHA</label><div class="captcha-box"><div><div id="captchaQuestion" class="captcha-question">Cargando...</div><input id="captchaAnswer" name="captchaAnswer" required inputmode="numeric" placeholder="Resultado" style="margin-top:.5rem"></div><button type="button" class="btn btn-outline" id="reloadCaptcha">↻</button></div></div><button class="btn btn-navy" style="width:100%;margin-top:1.2rem" type="submit">INGRESAR AL SISTEMA</button></form><div class="login-note"><b>Seguridad:</b> el sistema valida credenciales cifradas, CAPTCHA con expiración, bloqueo temporal por intentos fallidos, token de sesión y permisos RBAC. <br><a href="/parqueos" style="color:#0b5a97;font-weight:800">← Volver a Parqueos</a> · <a href="/" style="color:#0b5a97;font-weight:800">Portal EMI</a></div></div></section></main><script type="module" src="/js/auth.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ingreso PARKIA UALP</title>
+  <meta name="description" content="Acceso institucional seguro al sistema PARKIA EMI UALP.">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+</head>
+<body>
+<main class="login-shell">
+  <section class="login-visual" aria-label="Presentación de acceso institucional">
+    <div class="login-visual-content">
+      <div class="eyebrow">PÁGINA WEB INSTITUCIONAL · SISTEMA DE PARQUEOS</div>
+      <h1>Acceso seguro por perfil institucional</h1>
+      <p>Ingrese con su usuario, contraseña y CAPTCHA. Al validar el acceso, el sistema identifica automáticamente su perfil y muestra únicamente las funciones autorizadas.</p>
+      <div class="login-benefits" aria-label="Características de seguridad">
+        <span>✓ Acceso por usuario y contraseña</span>
+        <span>✓ Verificación CAPTCHA</span>
+        <span>✓ Bloqueo temporal ante intentos fallidos</span>
+        <span>✓ Compatible con computadora, tablet y celular</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="login-panel">
+    <div class="card login-card">
+      <a href="/parqueos" class="login-logo-link" aria-label="Volver a PARKIA">
+        <img class="logo" src="/assets/logo/parkia-logo.svg" alt="PARKIA UALP">
+      </a>
+      <div class="login-heading">
+        <span class="badge">ACCESO INSTITUCIONAL</span>
+        <h2>Iniciar sesión</h2>
+        <p>Ingrese sus credenciales para continuar.</p>
+      </div>
+
+      <div id="error" class="error hidden" role="alert" aria-live="assertive"></div>
+      <div id="status" class="login-status hidden" role="status" aria-live="polite"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="username">USUARIO</label>
+          <input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="60" required placeholder="Ej. operaciones">
+        </div>
+
+        <div class="field" style="margin-top:.9rem">
+          <label for="password">CONTRASEÑA</label>
+          <div class="password-wrap">
+            <input id="password" type="password" name="password" autocomplete="current-password" maxlength="256" required placeholder="••••••••••">
+            <button type="button" class="password-toggle" id="togglePassword" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button>
+          </div>
+          <small id="capsWarning" class="caps-warning hidden">Bloq Mayús está activado.</small>
+        </div>
+
+        <div class="field" style="margin-top:.9rem">
+          <label for="captchaAnswer">CONFIRMACIÓN · CAPTCHA</label>
+          <div class="captcha-box">
+            <div>
+              <div id="captchaQuestion" class="captcha-question" aria-live="polite">Cargando...</div>
+              <input id="captchaAnswer" name="captchaAnswer" required inputmode="numeric" autocomplete="off" maxlength="3" placeholder="Resultado" style="margin-top:.5rem">
+            </div>
+            <button type="button" class="btn btn-outline captcha-reload" id="reloadCaptcha" aria-label="Generar un nuevo CAPTCHA" title="Nuevo CAPTCHA">↻</button>
+          </div>
+        </div>
+
+        <button class="btn btn-navy login-submit" id="loginButton" type="submit">
+          <span id="loginButtonText">INGRESAR AL SISTEMA</span>
+          <span id="loginSpinner" class="login-spinner hidden" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <div class="login-note">
+        <b>Protección de acceso:</b> las credenciales se validan de forma segura, el CAPTCHA expira y la cuenta se bloquea temporalmente después de varios intentos fallidos.
+        <div class="login-links"><a href="/parqueos">← Volver a Parqueos</a><span>·</span><a href="/">Portal EMI</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script type="module" src="/js/auth.js"></script>
+</body>
+</html>

@@ -52,6 +52,23 @@ CREATE TABLE IF NOT EXISTS usuarios (
   actualizado_en TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+
+CREATE INDEX IF NOT EXISTS ix_usuarios_nombre_usuario_ci ON usuarios(LOWER(nombre_usuario));
+CREATE INDEX IF NOT EXISTS ix_usuarios_bloqueado_hasta ON usuarios(bloqueado_hasta) WHERE bloqueado_hasta IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS sesiones_autenticacion (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  usuario_id UUID NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+  jti UUID UNIQUE NOT NULL,
+  creado_en TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  expira_en TIMESTAMPTZ NOT NULL,
+  revocado_en TIMESTAMPTZ,
+  direccion_ip VARCHAR(80),
+  agente_usuario VARCHAR(500)
+);
+CREATE INDEX IF NOT EXISTS ix_sesiones_auth_usuario ON sesiones_autenticacion(usuario_id);
+CREATE INDEX IF NOT EXISTS ix_sesiones_auth_validas ON sesiones_autenticacion(jti,usuario_id,expira_en) WHERE revocado_en IS NULL;
+
 CREATE TABLE IF NOT EXISTS vehiculos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   placa VARCHAR(20) NOT NULL,
