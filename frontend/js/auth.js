@@ -2,6 +2,7 @@ import { api, sesion } from './api.js';
 
 let captchaToken = '';
 let countdownTimer = null;
+const THEME_KEY='parkia-theme';
 
 const q = document.getElementById('captchaQuestion');
 const err = document.getElementById('error');
@@ -16,6 +17,31 @@ const loginButtonText = document.getElementById('loginButtonText');
 const loginSpinner = document.getElementById('loginSpinner');
 const togglePassword = document.getElementById('togglePassword');
 const capsWarning = document.getElementById('capsWarning');
+
+function getPreferredTheme(){
+  const saved=localStorage.getItem(THEME_KEY);
+  if(saved==='dark'||saved==='light') return saved;
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function applyTheme(theme){
+  document.body.dataset.theme=theme;
+  const btn=document.getElementById('themeToggleLogin');
+  if(btn){
+    const icon=btn.querySelector('.theme-icon');
+    const text=btn.querySelector('.theme-text');
+    if(icon) icon.textContent=theme==='dark'?'☀️':'🌙';
+    if(text) text.textContent=theme==='dark'?'Modo claro':'Modo noche';
+    btn.setAttribute('aria-pressed', String(theme==='dark'));
+  }
+}
+function initTheme(){
+  applyTheme(getPreferredTheme());
+  document.getElementById('themeToggleLogin')?.addEventListener('click',()=>{
+    const next=document.body.dataset.theme==='dark'?'light':'dark';
+    localStorage.setItem(THEME_KEY,next);
+    applyTheme(next);
+  });
+}
 
 function setLoading(loading) {
   loginButton.disabled = loading;
@@ -141,6 +167,7 @@ form.addEventListener('submit', async e => {
 });
 
 async function iniciar() {
+  initTheme();
   if (sesion.token) {
     try {
       const data = await api('/autenticacion/yo');

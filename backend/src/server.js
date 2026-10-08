@@ -13,6 +13,7 @@ async function iniciar() {
     await query(`ALTER TABLE eventos_acceso ADD COLUMN IF NOT EXISTS evidencia_tipo VARCHAR(30) DEFAULT 'SIN_EVIDENCIA'`);
     await query(`ALTER TABLE alertas ADD COLUMN IF NOT EXISTS clave_incidente VARCHAR(160)`);
     await query(`CREATE UNIQUE INDEX IF NOT EXISTS ux_alertas_incidente_activo ON alertas(clave_incidente) WHERE clave_incidente IS NOT NULL AND estado <> 'CERRADA'`);
+    await query(await (await import('node:fs/promises')).readFile(new URL('../sql/05_auditoria_v15.sql', import.meta.url),'utf8'));
     iniciarVerificadorAlertas();
     app.listen(env.port, () => console.log(`PARKIA EMI UALP disponible en http://localhost:${env.port}`));
   } catch (error) {

@@ -1,7 +1,7 @@
-const CACHE='parkia-v14-reportes-permisos';
+const CACHE='parkia-v16-ux-ui';
 const ASSETS=[
   '/parqueos','/login','/sistema',
-  '/css/base.css','/css/public.css','/css/app.css',
+  '/css/base.css','/css/public.css','/css/app.css','/css/v15.css','/css/v16.css',
   '/js/api.js','/js/auth.js','/js/app.js',
   '/assets/logo/parkia-logo.svg'
 ];

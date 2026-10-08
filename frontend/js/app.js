@@ -14,6 +14,32 @@ import { renderRespaldos } from './pages/respaldos.js';
 
 const c = document.getElementById('content');
 const menu = document.getElementById('menu');
+const THEME_KEY='parkia-theme';
+
+function getPreferredTheme(){
+  const saved=localStorage.getItem(THEME_KEY);
+  if(saved==='dark'||saved==='light') return saved;
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function applyTheme(theme){
+  document.body.dataset.theme=theme;
+  const btn=document.getElementById('themeToggle');
+  if(btn){
+    const icon=btn.querySelector('.theme-icon');
+    const text=btn.querySelector('.theme-text');
+    if(icon) icon.textContent=theme==='dark'?'☀️':'🌙';
+    if(text) text.textContent=theme==='dark'?'Modo claro':'Modo noche';
+    btn.setAttribute('aria-pressed', String(theme==='dark'));
+  }
+}
+function initTheme(){
+  applyTheme(getPreferredTheme());
+  document.getElementById('themeToggle')?.addEventListener('click',()=>{
+    const next=document.body.dataset.theme==='dark'?'light':'dark';
+    localStorage.setItem(THEME_KEY,next);
+    applyTheme(next);
+  });
+}
 
 async function cerrarSesion() {
   const boton = document.getElementById('logout');
@@ -46,6 +72,7 @@ async function validarSesion() {
 }
 
 async function iniciarAplicacion() {
+  initTheme();
   const u = await validarSesion();
   if (!u) return;
 
@@ -53,6 +80,7 @@ async function iniciarAplicacion() {
   document.getElementById('userRole').textContent = u.nombreRol;
   document.getElementById('avatar').textContent = (u.nombreCompleto || 'U').trim().charAt(0).toUpperCase();
 
+  const puedeVerMiParqueo = u.rol === 'ESTUDIANTE' || tienePermiso('estudiante.mi_parqueo') || tienePermiso('parqueo.ver');
   const modulos = [
     { id:'mi-parqueo', label:'Mi parqueo', icon:'P', perm:'estudiante.mi_parqueo', grupo:'ESTUDIANTE', render:()=>renderEstudiante(c) },
     { id:'panel', label:'Panel principal', icon:'▦', perm:'panel.ver', grupo:'SUPERVISIÓN', render:()=>renderPanel(c,u) },
@@ -66,7 +94,7 @@ async function iniciarAplicacion() {
     { id:'usuarios', label:'Usuarios y roles', icon:'♙', perm:'usuarios.gestionar', grupo:'ADMINISTRACIÓN', render:()=>renderUsuarios(c) },
     { id:'auditoria', label:'Auditoría', icon:'✓', perm:'auditoria.ver', grupo:'ADMINISTRACIÓN', render:()=>renderAuditoria(c) },
     { id:'respaldos', label:'Respaldos', icon:'↻', perm:'respaldos.gestionar', grupo:'ADMINISTRACIÓN', render:()=>renderRespaldos(c) }
-  ].filter(m => u.rol === 'ESTUDIANTE' ? m.id === 'mi-parqueo' : m.id === 'mi-parqueo' ? Boolean(u.zonaAsignadaId) && (tienePermiso('estudiante.mi_parqueo') || tienePermiso('parqueo.ver')) : tienePermiso(m.perm));
+  ].filter(m => m.id==='mi-parqueo' ? puedeVerMiParqueo : tienePermiso(m.perm));
 
   for (const g of [...new Set(modulos.map(m => m.grupo))]) {
     const h = document.createElement('h4');
@@ -105,7 +133,7 @@ async function iniciarAplicacion() {
   }
 
   const wanted = location.hash.slice(1);
-  const defaultId = u.rol === 'ESTUDIANTE' ? 'mi-parqueo' : 'panel';
+  const defaultId = (u.rol === 'ESTUDIANTE' && puedeVerMiParqueo) ? 'mi-parqueo' : 'panel';
   const initial = modulos.find(m => m.id === wanted) || modulos.find(m=>m.id===defaultId) || modulos[0];
   if (initial) navegar(initial);
   else c.innerHTML = '<div class="card panel"><h3>Sin módulos asignados</h3><p>Contacte al administrador del sistema.</p></div>';

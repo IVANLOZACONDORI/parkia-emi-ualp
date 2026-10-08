@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { query } from '../config/db.js';
+import { registrarAuditoria } from './audit.js';
 
 export async function authenticate(req, res, next) {
   const header = req.headers.authorization || '';
@@ -62,5 +63,6 @@ export async function authenticate(req, res, next) {
 export const requirePermission = (...requeridos) => (req, res, next) => {
   const permisos = new Set(req.user?.permisos || []);
   if (permisos.has('*') || requeridos.some(p => permisos.has(p))) return next();
+  void registrarAuditoria({usuarioId:req.user?.sub,accion:'ACCESO_DENEGADO_PERMISO',entidad:'seguridad',detalle:{ruta:req.originalUrl?.split('?')[0],metodo:req.method,permisosRequeridos:requeridos},req});
   return res.status(403).json({ message: 'No tiene permisos para realizar esta acción.' });
 };
