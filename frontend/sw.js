@@ -1,10 +1,11 @@
-const CACHE='parkia-v17-mapeo-real-campus';
+const CACHE='parkia-v18-mapa-interactivo-plazas';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css','/css/v15.css',
   '/js/api.js','/js/auth.js','/js/app.js','/js/pages/parqueos.js','/js/pages/ocupacion.js',
   '/assets/logo/parkia-logo.svg',
   '/assets/maps/emi_mapa_general_validado.png',
+  '/assets/maps/emi_mapa_interactivo_v18.png',
   '/assets/maps/emi_autoridades_frente_izquierdo.png',
   '/assets/maps/emi_administrativo_frente_derecho.png',
   '/assets/maps/emi_estudiantes_sector_trasero.png'

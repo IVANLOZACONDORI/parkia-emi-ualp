@@ -19,3 +19,9 @@ Lea `docs/REQUISITOS_MODULO_12_V15.md`, `docs/PLAN_RESTAURACION_Y_PRUEBAS_V15.md
 - Autoridades: frente izquierdo.
 - Administrativo: frente derecho.
 - Cámaras IA de ocupación asociadas por zona y cámara LPR en el ingreso.
+
+
+## V18 · Mapa interactivo sobre imagen
+- Las plazas se muestran sobre la imagen del campus.
+- Cada plaza indica si está disponible, ocupada, fuera de servicio o sin datos.
+- Se reforzó el valor visual del módulo de zonas, plazas y cámaras.
