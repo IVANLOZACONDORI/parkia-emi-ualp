@@ -1,4 +1,4 @@
-const CACHE='parkia-v6-vehiculos';
+const CACHE='parkia-v7-accesos';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css',

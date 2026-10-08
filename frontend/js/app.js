@@ -57,7 +57,7 @@ async function iniciarAplicacion() {
     { id:'mi-parqueo', label:'Mi parqueo', icon:'P', perm:'estudiante.mi_parqueo', grupo:'ESTUDIANTE', render:()=>renderEstudiante(c) },
     { id:'panel', label:'Panel principal', icon:'▦', perm:'panel.ver', grupo:'SUPERVISIÓN', render:()=>renderPanel(c,u) },
     { id:'vehiculos', label:'Vehículos y autorizaciones', icon:'🚘', perm:'vehiculos.ver', grupo:'OPERACIÓN', render:()=>renderVehiculos(c) },
-    { id:'accesos', label:'Ingreso por cámara IA', icon:'▣', perm:'acceso.ver', grupo:'OPERACIÓN', render:()=>renderAccesos(c) },
+    { id:'accesos', label:'Control de ingreso y salida', icon:'▣', perm:'acceso.ver', grupo:'OPERACIÓN', render:()=>renderAccesos(c) },
     { id:'parqueos', label:'Zonas, plazas y cámaras', icon:'P', perm:'parqueo.ver', grupo:'INFRAESTRUCTURA', render:()=>renderParqueos(c) },
     { id:'ocupacion', label:'Ocupación por visión IA', icon:'◉', perm:'ocupacion.ver', grupo:'INFRAESTRUCTURA', render:()=>renderOcupacion(c) },
     { id:'alertas', label:'Alertas', icon:'⚠', perm:'alertas.ver', grupo:'SUPERVISIÓN', render:()=>renderAlertas(c) },

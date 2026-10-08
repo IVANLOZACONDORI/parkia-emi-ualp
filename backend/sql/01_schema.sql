@@ -77,6 +77,9 @@ CREATE TABLE IF NOT EXISTS vehiculos (
   modelo VARCHAR(80),
   color VARCHAR(60),
   referencia_propietario VARCHAR(170),
+  propietario_usuario_id UUID REFERENCES usuarios(id),
+  foto_vehiculo TEXT,
+  foto_placa TEXT,
   categoria_usuario VARCHAR(40) NOT NULL DEFAULT 'INSTITUCIONAL' CHECK(categoria_usuario IN ('MILITAR','CIVIL','ADMINISTRATIVO','ESTUDIANTE','VISITANTE','PROVEEDOR','INSTITUCIONAL')),
   estado VARCHAR(20) NOT NULL DEFAULT 'ACTIVO' CHECK(estado IN ('ACTIVO','SUSPENDIDO','RETIRADO')),
   creado_por UUID REFERENCES usuarios(id),
@@ -138,6 +141,7 @@ CREATE TABLE IF NOT EXISTS eventos_acceso (
   placa_detectada VARCHAR(20),
   vehiculo_id UUID REFERENCES vehiculos(id),
   imagen_url TEXT,
+  evidencia_tipo VARCHAR(30) DEFAULT 'SIN_EVIDENCIA',
   confianza_reconocimiento NUMERIC(5,2),
   resultado_validacion VARCHAR(30) NOT NULL DEFAULT 'PENDIENTE' CHECK(resultado_validacion IN ('AUTORIZADO','DENEGADO','PENDIENTE','MANUAL','INCIERTO')),
   autorizado_manual BOOLEAN NOT NULL DEFAULT FALSE,
@@ -171,6 +175,7 @@ CREATE TABLE IF NOT EXISTS eventos_ocupacion (
   camara_id UUID REFERENCES dispositivos(id),
   origen VARCHAR(30) NOT NULL DEFAULT 'VISION_IA' CHECK(origen IN ('VISION_IA','MANUAL','SIMULADOR','DISPOSITIVO')),
   imagen_url TEXT,
+  evidencia_tipo VARCHAR(30) DEFAULT 'SIN_EVIDENCIA',
   cambiado_en TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS ix_eventos_ocupacion_plaza_fecha ON eventos_ocupacion(plaza_id,cambiado_en DESC);
