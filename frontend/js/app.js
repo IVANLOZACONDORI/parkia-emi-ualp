@@ -66,7 +66,7 @@ async function iniciarAplicacion() {
     { id:'usuarios', label:'Usuarios y roles', icon:'♙', perm:'usuarios.gestionar', grupo:'ADMINISTRACIÓN', render:()=>renderUsuarios(c) },
     { id:'auditoria', label:'Auditoría', icon:'✓', perm:'auditoria.ver', grupo:'ADMINISTRACIÓN', render:()=>renderAuditoria(c) },
     { id:'respaldos', label:'Respaldos', icon:'↻', perm:'respaldos.gestionar', grupo:'ADMINISTRACIÓN', render:()=>renderRespaldos(c) }
-  ].filter(m => u.rol === 'ESTUDIANTE' ? m.id === 'mi-parqueo' : tienePermiso(m.perm));
+  ].filter(m => u.rol === 'ESTUDIANTE' ? m.id === 'mi-parqueo' : m.id === 'mi-parqueo' ? Boolean(u.zonaAsignadaId) && (tienePermiso('estudiante.mi_parqueo') || tienePermiso('parqueo.ver')) : tienePermiso(m.perm));
 
   for (const g of [...new Set(modulos.map(m => m.grupo))]) {
     const h = document.createElement('h4');

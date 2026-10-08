@@ -8,7 +8,7 @@ function contenido(c,d){
   const r=d.resumen;const libre=r.libres>0;
   const root=elemento('section','student-page student-v9');
   const head=elemento('header','page-head');
-  const title=elemento('div');title.append(elemento('p','student-eyebrow','CONSULTA DEL ESTUDIANTE'),elemento('h1','','Mi parqueo'),elemento('p','student-zone',d.zona.nombre+' · '+(d.zona.ubicacion||'Sector trasero')));
+  const title=elemento('div');title.append(elemento('p','student-eyebrow','CONSULTA DE PARQUEO ASIGNADO'),elemento('h1','','Mi parqueo'),elemento('p','student-zone',d.zona.nombre+' · '+(d.zona.ubicacion||'Sector trasero')));
   head.append(title,elemento('span','student-live','● Actualización automática'));root.append(head);
   const banner=elemento('section','student-availability '+(libre?'available':'full'));
   const bannerTxt=elemento('div');bannerTxt.append(elemento('small','','ESTADO DE DISPONIBILIDAD'),elemento('h2','',d.mensaje),elemento('p','','Última actualización: '+fecha(d.actualizadoEn)));
@@ -17,7 +17,7 @@ function contenido(c,d){
   for(const [cl,n,v] of [['total','Plazas registradas',r.total],['libre','Libres',r.libres],['ocupada','Ocupadas',r.ocupadas],['fuera-servicio','Fuera de servicio',r.fueraServicio],['sin-datos','Sin datos',r.sinDatos]]){
     const card=elemento('article','student-stat '+cl);card.append(elemento('strong','',v),elemento('span','',n));stats.append(card);
   }root.append(stats);
-  const panel=elemento('section','card panel student-panel');panel.append(elemento('h3','','Mapa de plazas · Sector Trasero'));
+  const panel=elemento('section','card panel student-panel');panel.append(elemento('h3','','Mapa de plazas · Zona asignada'));
   const legend=elemento('div','student-legend');
   for(const [s,n] of Object.entries(etiquetas)){const chip=elemento('span','student-legend-item');chip.append(elemento('i','student-dot '+estilos[s]),elemento('span','',n));legend.append(chip)}panel.append(legend);
   const mapa=elemento('div','student-map student-map-v9');mapa.setAttribute('role','list');mapa.setAttribute('aria-label','Estado actual de las plazas');
@@ -26,7 +26,7 @@ function contenido(c,d){
     const tarjeta=elemento('article','student-slot '+(estilos[plaza.estado]||'sin-datos'));tarjeta.setAttribute('role','listitem');tarjeta.setAttribute('aria-label','Plaza '+plaza.codigo+': '+estado);
     tarjeta.append(elemento('b','',plaza.codigo),elemento('span','',estado));mapa.append(tarjeta);
   }panel.append(mapa);root.append(panel);
-  root.append(elemento('p','student-note','Información exclusiva de la Zona Estudiantes – Sector Trasero. Los estados reflejan el último registro disponible.'));
+  root.append(elemento('p','student-note','Datos de la zona asignada a su cuenta. La información se actualiza automáticamente.'));
   c.replaceChildren(root);
 }
 export function detenerConsultaEstudiante(){

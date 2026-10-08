@@ -1,4 +1,4 @@
-const CACHE='parkia-v13-historial-corregido';
+const CACHE='parkia-v14-reportes-permisos';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css',
