@@ -14,9 +14,8 @@ Lea `docs/REQUISITOS_MODULO_12_V15.md`, `docs/PLAN_RESTAURACION_Y_PRUEBAS_V15.md
 **No confundir solicitud registrada o cierre administrativo con ejecución de una copia/recuperación real.**
 
 
-## V16 · UX/UI mejorada
-- Modo claro y modo oscuro persistentes.
-- Navegación lateral y cabecera mejoradas.
-- Tarjetas, paneles y tablas con diseño más institucional.
-- Animaciones suaves y microinteracciones.
-- Corrección visual para mostrar “Mi parqueo” cuando el rol tenga permisos.
+## V17 · Mapeo real del campus
+- Estudiantes: parte trasera.
+- Autoridades: frente izquierdo.
+- Administrativo: frente derecho.
+- Cámaras IA de ocupación asociadas por zona y cámara LPR en el ingreso.

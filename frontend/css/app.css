@@ -21,3 +21,20 @@
 
 /* Reportes institucionales V14 */
 .reports-v14{padding:4px 0 32px}.report-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin:16px 0}.report-controls label{display:grid;gap:6px;font-weight:650;color:#163c66}.report-controls input,.report-controls select{border:1px solid #c8d6e7;border-radius:9px;padding:10px;min-width:145px;background:white;color:#103c60}.report-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}.report-kpi{display:grid;gap:10px;padding:20px;border-top:4px solid #00a2ba}.report-kpi strong{font-size:30px;color:#093969}.report-kpi span{color:#58718e}.report-section{margin:18px 0}.report-section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.report-section-head h2{font-size:19px}.report-table-wrap{overflow-x:auto}.report-table{width:100%;border-collapse:collapse;min-width:480px}.report-table th,.report-table td{padding:12px;border-bottom:1px solid #dae3ed;text-align:left}.report-table th{background:#0b3f72;color:white}.report-period,.report-footnote{font-size:13px;color:#526983}@media(max-width:640px){.report-controls label,.report-controls input,.report-controls select,.report-controls button{width:100%}.report-kpi strong{font-size:25px}}
+
+
+/* V17 · Mapeo real del campus */
+.campus-real-map{display:grid;grid-template-columns:1fr 1.2fr;gap:1.2rem;align-items:center}
+.campus-map-copy p{color:#5f7084;line-height:1.6}
+.campus-map-image{width:100%;border-radius:18px;border:1px solid #d7e0ea;box-shadow:0 12px 34px rgba(15,23,42,.08)}
+.campus-legend{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}.campus-legend .lg{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .7rem;border-radius:999px;font-size:.78rem;font-weight:800;border:1px solid #d7e0ea;background:#f8fbff;color:#1b3a57}
+.campus-legend .students{background:#eaf8ec;color:#166534}.campus-legend .authorities{background:#eef4ff;color:#1d4ed8}.campus-legend .admin{background:#fff4ea;color:#c2410c}.campus-legend .camera{background:#f4f4ff;color:#5b21b6}
+.zone-real-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1rem}
+.zone-real-card{background:#fff;border:1px solid #d7e0ea;border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.06);padding:1rem;display:flex;flex-direction:column;gap:.8rem}
+.zone-real-card h3{margin:.15rem 0;color:#0c3f73;font-size:1.1rem}.zone-real-card p{margin:0;color:#64748b;line-height:1.55;font-size:.9rem}
+.zone-chip{display:inline-block;background:#e7f1fb;color:#0c3f73;border-radius:999px;padding:.28rem .62rem;font-size:.74rem;font-weight:800}
+.zone-real-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem}.zone-real-kpis div{border:1px solid #e2e8f0;background:#f8fbff;border-radius:14px;padding:.7rem;text-align:center}.zone-real-kpis b{display:block;font-size:1.25rem;color:#0c3f73}.zone-real-kpis span{font-size:.78rem;color:#64748b}
+.zone-real-list{margin:0;padding-left:1rem;color:#44576a;line-height:1.55;font-size:.88rem}.zone-real-image{width:100%;border-radius:14px;border:1px solid #e2e8f0}
+.zone-real-card.students{box-shadow:0 12px 30px rgba(22,163,74,.12)}.zone-real-card.authorities{box-shadow:0 12px 30px rgba(29,78,216,.12)}.zone-real-card.admin{box-shadow:0 12px 30px rgba(194,65,12,.12)}
+.vision-zone-block{margin-bottom:1rem}.vision-zone-block h4{margin:.4rem 0 .75rem;color:#0c3f73}.vision-zone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.75rem}
+@media(max-width:980px){.campus-real-map{grid-template-columns:1fr}.zone-real-grid{grid-template-columns:1fr}}
