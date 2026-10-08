@@ -15,6 +15,8 @@ const usuariosDemo = [
 export async function asegurarEstructuraAutenticacion() {
   await query(`INSERT INTO permisos(codigo,modulo,descripcion) VALUES('usuarios.permisos','Usuarios','Administrar privilegios asignados a roles.') ON CONFLICT(codigo) DO NOTHING`);
   await query(`INSERT INTO roles_permisos(rol_id,permiso_id) SELECT r.id,p.id FROM roles r CROSS JOIN permisos p WHERE r.codigo='ADMINISTRADOR_SISTEMA' AND p.codigo='usuarios.permisos' ON CONFLICT DO NOTHING`);
+  // El guardia dispone de consulta global de plazas, sin permisos de administración.
+  await query(`INSERT INTO roles_permisos(rol_id,permiso_id) SELECT r.id,p.id FROM roles r CROSS JOIN permisos p WHERE r.codigo='PERSONAL_GUARDIA' AND p.codigo IN ('panel.ver','parqueo.ver') ON CONFLICT DO NOTHING`);
   await query('CREATE INDEX IF NOT EXISTS ix_usuarios_nombre_usuario_ci ON usuarios(LOWER(nombre_usuario))');
   await query('CREATE INDEX IF NOT EXISTS ix_usuarios_bloqueado_hasta ON usuarios(bloqueado_hasta) WHERE bloqueado_hasta IS NOT NULL');
   await query(`

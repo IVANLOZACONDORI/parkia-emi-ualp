@@ -1,4 +1,4 @@
-const CACHE='parkia-v9-estudiante';
+const CACHE='parkia-v10-supervision';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css',
