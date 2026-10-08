@@ -1,7 +1,5 @@
-# PARKIA EMI UALP V7
+# PARKIA EMI UALP — V9
 
-Sistema institucional de parqueos. Entrega acumulativa de los módulos 1 a 4: autenticación, usuarios/permisos, vehículos/autorizaciones, ingreso y salida por OCR de placa, revisión manual y auditoría.
+Versión acumulativa sobre V8. Mejora el módulo 7 de consulta del estudiante con aislamiento de zona, tablero de ocupación y actualización automática. Consulte `docs/REQUISITOS_MODULO_7_V9.md` y `docs/ACTUALIZAR_GITHUB_V9.md`.
 
-Instrucciones: `docs/ACTUALIZAR_GITHUB_V7.md` y `docs/REQUISITOS_MODULO_4_V7.md`.
-
-**Estado de validación:** comprobaciones estáticas y paquete íntegro; la prueba integral con Docker, cámara real y carga de fotografías debe ejecutarse en el entorno de despliegue. La solución admite captura desde un dispositivo compatible y archivos de imagen, pero no se conecta directamente a cámaras CCTV IP.
+No se muestra información de implementación de almacenamiento en las pantallas del estudiante.

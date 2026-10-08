@@ -1,6 +1,6 @@
 {
   "name": "parkia-emi-ualp",
-  "version": "5.0.0",
+  "version": "9.0.0",
   "private": true,
   "description": "PARKIA EMI UALP V5 - Sistema institucional de gestión de parqueos con autenticación reforzada y control por roles",
   "scripts": {
