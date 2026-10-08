@@ -1,4 +1,4 @@
-const CACHE='parkia-v4-auth';
+const CACHE='parkia-v5-roles';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css',

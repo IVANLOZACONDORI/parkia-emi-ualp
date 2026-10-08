@@ -12,6 +12,7 @@ ON CONFLICT(codigo) DO NOTHING;
 INSERT INTO permisos(codigo,modulo,descripcion) VALUES
 ('panel.ver','Panel','Ver panel general institucional.'),
 ('usuarios.gestionar','Usuarios','Administrar usuarios, roles y estados.'),
+('usuarios.permisos','Usuarios','Administrar privilegios asignados a roles.'),
 ('vehiculos.ver','Vehículos','Consultar vehículos y autorizaciones.'),
 ('vehiculos.gestionar','Vehículos','Registrar y modificar vehículos y autorizaciones.'),
 ('acceso.ver','Acceso','Consultar eventos de ingreso y salida.'),
