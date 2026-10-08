@@ -1,4 +1,4 @@
-const CACHE='parkia-v18-mapa-interactivo-plazas';
+const CACHE='parkia-v20-mapa-con-tarjetas';
 const ASSETS=[
   '/parqueos','/login','/sistema',
   '/css/base.css','/css/public.css','/css/app.css','/css/v15.css',

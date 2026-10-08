@@ -54,3 +54,38 @@
 .map-slot.libre{background:rgba(34,197,94,.9);color:#fff}.map-slot.ocupada{background:rgba(239,68,68,.92);color:#fff}.map-slot.fuera-servicio{background:rgba(249,115,22,.92);color:#fff}.map-slot.sin-datos{background:rgba(100,116,139,.92);color:#fff}
 .campus-legend .status{background:#fff}.campus-legend .status.libre{color:#166534;border-color:#86efac;background:#dcfce7}.campus-legend .status.ocupada{color:#991b1b;border-color:#fca5a5;background:#fee2e2}.campus-legend .status.fuera-servicio{color:#9a3412;border-color:#fdba74;background:#ffedd5}.campus-legend .status.sin-datos{color:#475569;border-color:#cbd5e1;background:#f1f5f9}
 @media(max-width:640px){.map-slot{width:34px;height:34px;border-radius:6px}.map-slot .slot-code{font-size:.46rem}.map-slot .slot-state{display:none}.map-zone-label{font-size:.66rem;padding:.28rem .46rem}}
+
+
+/* V19 · Sectores limpios y ordenados */
+.campus-schema{display:grid;grid-template-columns:1.15fr .95fr;gap:1rem;align-items:center}
+.schema-copy p{color:#64748b;line-height:1.6}
+.schema-layout{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:.9rem}
+.schema-box{border-radius:18px;padding:1rem 1.1rem;color:#fff;font-weight:800;min-height:96px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 24px rgba(15,23,42,.10)}
+.schema-box strong{font-size:1.08rem}.schema-box.students{background:linear-gradient(135deg,#1d7f43,#16a34a)}.schema-box.authorities{background:linear-gradient(135deg,#1d4ed8,#3b82f6)}.schema-box.admin{background:linear-gradient(135deg,#c2410c,#f97316)}.schema-box.large{grid-column:1 / span 2;min-height:118px}
+.sector-grid-layout,.clean-sector-board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1rem}.clean-sector-board{grid-template-columns:1fr}
+.sector-card,.vision-sector-card{background:#fff;border:1px solid #dbe5ef;border-radius:20px;padding:1rem;box-shadow:0 10px 28px rgba(15,23,42,.06)}
+.sector-card.students,.vision-sector-card.students{box-shadow:0 12px 26px rgba(22,163,74,.10)}.sector-card.authorities,.vision-sector-card.authorities{box-shadow:0 12px 26px rgba(29,78,216,.10)}.sector-card.admin,.vision-sector-card.admin{box-shadow:0 12px 26px rgba(249,115,22,.10)}
+.sector-card-head,.vision-sector-head{display:grid;grid-template-columns:1fr 180px;gap:.9rem;align-items:start}.vision-sector-head{grid-template-columns:1fr 160px}
+.sector-card-head img,.vision-sector-head img{width:100%;height:120px;object-fit:cover;border-radius:16px;border:1px solid #dbe5ef}
+.sector-badge{display:inline-flex;padding:.34rem .64rem;border-radius:999px;background:#eff6ff;color:#0c3f73;font-size:.76rem;font-weight:900;margin-bottom:.45rem}
+.sector-card h3,.vision-sector-card h4{margin:0;color:#0c3f73}.sector-card p,.vision-sector-card p{margin:.3rem 0 0;color:#64748b;line-height:1.5}
+.sector-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin:.9rem 0}.sector-kpis.compact{grid-template-columns:repeat(3,1fr)}.sector-kpis div{background:#f8fbff;border:1px solid #e2e8f0;border-radius:14px;padding:.6rem;text-align:center}.sector-kpis b{display:block;color:#0c3f73;font-size:1.1rem}.sector-kpis span{color:#64748b;font-size:.77rem}
+.sector-slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:.6rem}.sector-slot-grid.occupancy{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}
+.sector-slot{border-radius:14px;border:1px solid #d7e0ea;padding:.6rem .45rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.22rem;text-align:center;min-height:68px;background:#fff}.sector-slot strong{color:#0c3f73;font-size:.93rem;line-height:1}.sector-slot span,.sector-slot small{font-size:.72rem;color:#64748b;line-height:1.15}.sector-slot.libre{background:#eaf8ee;border-color:#7bd49c}.sector-slot.libre strong,.sector-slot.libre span,.sector-slot.libre small{color:#166534}.sector-slot.ocupada{background:#fff1f1;border-color:#f1a6a6}.sector-slot.ocupada strong,.sector-slot.ocupada span,.sector-slot.ocupada small{color:#b42318}.sector-slot.fuera-servicio{background:#fff5ea;border-color:#f8bb8a}.sector-slot.fuera-servicio strong,.sector-slot.fuera-servicio span,.sector-slot.fuera-servicio small{color:#c2410c}.sector-slot.sin-datos{background:#f5f7fa;border-color:#d7dee8}.sector-slot.sin-datos strong,.sector-slot.sin-datos span,.sector-slot.sin-datos small{color:#475569}
+.sector-footnote{margin-top:.8rem;color:#64748b;font-size:.84rem;line-height:1.5}
+@media(max-width:1080px){.campus-schema,.sector-grid-layout{grid-template-columns:1fr}.sector-card-head,.vision-sector-head{grid-template-columns:1fr}}
+@media(max-width:640px){.sector-kpis{grid-template-columns:repeat(2,1fr)}.sector-kpis.compact{grid-template-columns:repeat(3,1fr)}.schema-layout{grid-template-columns:1fr}.schema-box.large{grid-column:auto}}
+
+
+/* V20 · Imagen del parqueo con tarjetas encima */
+.sector-grid-layout.one-col{grid-template-columns:1fr}
+.overlay-style .sector-card-head,.overlay-style .vision-sector-head{grid-template-columns:1fr}
+.sector-image-map{position:relative;border-radius:20px;overflow:hidden;border:1px solid #dbe5ef;box-shadow:0 14px 30px rgba(15,23,42,.08);background:#fff;min-height:280px;margin-top:.7rem}
+.sector-image-map.compact{min-height:240px}
+.sector-image-map img{display:block;width:100%;height:auto;min-height:280px;object-fit:cover;filter:saturate(1.03) contrast(1.02)}
+.sector-image-map.compact img{min-height:240px}
+.overlay-slot{position:absolute;transform:translate(-50%,-50%);min-width:72px;max-width:88px;padding:.38rem .45rem;border-radius:12px;border:2px solid rgba(255,255,255,.92);box-shadow:0 10px 20px rgba(15,23,42,.18);text-align:center;display:flex;flex-direction:column;gap:.12rem;backdrop-filter:blur(4px)}
+.overlay-slot strong{font-size:.78rem;line-height:1;font-weight:900}.overlay-slot span{font-size:.61rem;line-height:1.1;font-weight:700}
+.overlay-slot.small{min-width:60px;max-width:76px;padding:.3rem .36rem}.overlay-slot.small strong{font-size:.7rem}.overlay-slot.small span{font-size:.56rem}
+.overlay-slot.libre{background:rgba(220,252,231,.94);border-color:#86efac;color:#166534}.overlay-slot.ocupada{background:rgba(254,226,226,.95);border-color:#fca5a5;color:#991b1b}.overlay-slot.fuera-servicio{background:rgba(255,237,213,.95);border-color:#fdba74;color:#9a3412}.overlay-slot.sin-datos{background:rgba(241,245,249,.96);border-color:#cbd5e1;color:#334155}
+@media(max-width:900px){.sector-image-map{min-height:220px}.sector-image-map img{min-height:220px}.overlay-slot{min-width:58px;max-width:72px;padding:.28rem .34rem}.overlay-slot strong{font-size:.67rem}.overlay-slot span{font-size:.52rem}}

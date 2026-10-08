@@ -25,3 +25,16 @@ Lea `docs/REQUISITOS_MODULO_12_V15.md`, `docs/PLAN_RESTAURACION_Y_PRUEBAS_V15.md
 - Las plazas se muestran sobre la imagen del campus.
 - Cada plaza indica si está disponible, ocupada, fuera de servicio o sin datos.
 - Se reforzó el valor visual del módulo de zonas, plazas y cámaras.
+
+
+## V19 · Presentación limpia por sectores
+- Eliminado el amontonamiento visual del estado agrupado.
+- Presentación ordenada por sectores institucionales.
+- Sin usar la imagen con líneas de referencia.
+- Vista más estética y profesional para parqueos y ocupación.
+
+
+## V20 · Imagen del parqueo con tarjetas superpuestas
+- Cada sector muestra la imagen real del parqueo.
+- Las plazas aparecen encima de la imagen como tarjetas/cuadrados.
+- Cada tarjeta indica el estado de la plaza.

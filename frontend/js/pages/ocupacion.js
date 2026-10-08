@@ -1,37 +1,40 @@
 
 import {api,fecha} from '../api.js';
 const encode=file=>new Promise((resolve,reject)=>{if(!file||file.size>6*1024*1024)return reject(new Error('Elija una imagen de hasta 6 MB.'));const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(new Error('No se pudo leer la fotografía.'));r.readAsDataURL(file)});
-const escape=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-const zoneLabel=(z)=>({
- 'Zona Estudiantes - Sector Trasero':'Estudiantes · sector trasero',
- 'Zona Autoridades - Frente Izquierdo':'Autoridades · frente izquierdo',
- 'Zona Administrativa - Frente Derecho':'Administrativo · frente derecho'
-}[z]||z);
+const esc=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+
+const zoneMeta={
+ 'Z-EST-TRASERA':{key:'est',short:'Estudiantes',title:'Zona Estudiantes · Sector trasero',color:'students',img:'/assets/maps/emi_estudiantes_sector_trasero.png',desc:'Sector real destinado a estudiantes, ubicado en la parte trasera del campus.'},
+ 'Z-AUTORIDADES':{key:'aut',short:'Autoridades',title:'Zona Autoridades · Frente izquierdo',color:'authorities',img:'/assets/maps/emi_autoridades_frente_izquierdo.png',desc:'Sector frontal izquierdo reservado para autoridades.'},
+ 'Z-ADMIN':{key:'adm',short:'Administrativo',title:'Zona Administrativa · Frente derecho',color:'admin',img:'/assets/maps/emi_administrativo_frente_derecho.png',desc:'Sector frontal derecho destinado a personal administrativo.'},
+ 'Zona Estudiantes - Sector Trasero':{key:'est',short:'Estudiantes',title:'Sector trasero',color:'students',img:'/assets/maps/emi_estudiantes_sector_trasero.png',desc:'Sector real destinado a estudiantes, ubicado en la parte trasera del campus.'},
+ 'Zona Autoridades - Frente Izquierdo':{key:'aut',short:'Autoridades',title:'Frente izquierdo',color:'authorities',img:'/assets/maps/emi_autoridades_frente_izquierdo.png',desc:'Sector frontal izquierdo reservado para autoridades.'},
+ 'Zona Administrativa - Frente Derecho':{key:'adm',short:'Administrativo',title:'Frente derecho',color:'admin',img:'/assets/maps/emi_administrativo_frente_derecho.png',desc:'Sector frontal derecho destinado a personal administrativo.'}
+};
+const stateClass=s=>({LIBRE:'libre',OCUPADA:'ocupada',FUERA_SERVICIO:'fuera-servicio',SIN_DATOS:'sin-datos'}[s]||'sin-datos');
+const stateLabel=s=>({LIBRE:'Disponible',OCUPADA:'Ocupada',FUERA_SERVICIO:'Fuera de servicio',SIN_DATOS:'Sin datos'}[s]||s||'Sin datos');
+const overlayPos={
+ est:{EM01:[18,14],EM02:[32,18],EM03:[46,22],EM04:[60,26],EM05:[74,30],EM06:[84,34],EM07:[18,32],EM08:[32,36],EM09:[46,40],EM10:[60,44],EM11:[74,48],EM12:[84,52],EM13:[18,50],EM14:[32,54],EM15:[46,58],EM16:[60,62],EM17:[74,66],EM18:[84,70],EM19:[18,68],EM20:[32,72],EM21:[46,76],EM22:[60,80],EM23:[74,84],EM24:[84,88]},
+ aut:{AU01:[70,14],AU02:[73,24],AU03:[76,34],AU04:[79,44],AU05:[82,54],AU06:[85,64],AU07:[88,74],AU08:[91,84]},
+ adm:{AD01:[72,16],AD02:[78,26],AD03:[84,36],AD04:[72,50],AD05:[78,60],AD06:[84,70],AD07:[72,82],AD08:[78,88],AD09:[84,94]}
+};
+function overlayCard(p, key, extra=''){
+  const pos=(overlayPos[key]||{})[p.codigo];
+  if(!pos) return '';
+  return `<div class="overlay-slot ${stateClass(p.estado_actual)} ${extra}" style="left:${pos[0]}%;top:${pos[1]}%"><strong>${p.codigo}</strong><span>${stateLabel(p.estado_actual)}</span></div>`;
+}
+
+function zoneLabel(z){const m=zoneMeta[z];return m?`${m.short} · ${m.title}`:z}
+function board(group){ const zona=group[0].zona_nombre; const m=zoneMeta[zona]||{short:zona,title:'',color:'students',img:'',key:'est'}; const libres=group.filter(p=>p.estado_actual==='LIBRE').length; const ocup=group.filter(p=>p.estado_actual==='OCUPADA').length; return `<section class="vision-sector-card overlay-style ${m.color}"><div class="vision-sector-head"><div><span class="sector-badge">${esc(m.short)}</span><h4>${esc(zoneLabel(zona))}</h4><p>La ocupación del sector se visualiza sobre la imagen real del parqueo.</p></div></div><div class="sector-kpis compact"><div><b>${group.length}</b><span>Plazas</span></div><div><b>${libres}</b><span>Disponibles</span></div><div><b>${ocup}</b><span>Ocupadas</span></div></div><div class="sector-image-map compact"><img src="${m.img}" alt="${esc(zoneLabel(zona))}">${group.sort((a,b)=>String(a.codigo).localeCompare(String(b.codigo),undefined,{numeric:true})).map(p=>overlayCard(p,m.key,'small')).join('')}</div></section>`}
 export async function renderOcupacion(c){
- c.innerHTML=`<div class="page-head"><div><h1>Ocupación por visión artificial</h1><p>Las cámaras IA verifican la ocupación de las zonas reales del campus. El análisis se apoya en referencias calibradas y nunca autoriza cambios cuando la lectura es incierta.</p></div></div><div id="vision-msg" role="status"></div><div class="card panel"><h3>Procesamiento de fotografías</h3><p>Seleccione una plaza de la zona correspondiente. Las áreas reales del campus están mapeadas como estudiantes (trasero), autoridades (frente izquierdo) y administrativo (frente derecho).</p><label>Plaza <select id="vision-plaza"></select></label><div id="vision-zone-info" class="role-banner" style="margin-top:10px">La cámara asignada verificará la ocupación de la plaza seleccionada.</div><div class="grid" style="display:flex;flex-wrap:wrap;gap:12px"><label>X % <input id="vision-x" type="number" value="0" min="0" max="95"></label><label>Y % <input id="vision-y" type="number" value="0" min="0" max="95"></label><label>Ancho % <input id="vision-w" type="number" value="100" min="6" max="100"></label><label>Alto % <input id="vision-h" type="number" value="100" min="6" max="100"></label></div><label>Referencia libre <input id="vision-libre" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><label>Referencia ocupada <input id="vision-ocupada" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><button class="btn" id="vision-calibrar">Guardar recalibración</button><hr><label>Fotografía actual <input id="vision-actual" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><button class="btn" id="vision-procesar">Analizar imagen y actualizar plaza</button></div><div class="card panel"><h3>Estado agrupado por zona</h3><div id="vision-tablero" class="space-board"></div></div><div class="card panel"><h3>Últimas evaluaciones</h3><div id="vision-historial" class="table-wrap"></div></div>`;
+ c.innerHTML=`<div class="page-head"><div><h1>Ocupación por visión artificial</h1><p>El tablero ahora presenta cada sector con la imagen del parqueo y tarjetas de plazas sobre la fotografía para una lectura más intuitiva.</p></div></div><div id="vision-msg" role="status"></div><div class="card panel"><h3>Procesamiento de fotografías</h3><p>Seleccione una plaza de la zona correspondiente. La cámara asignada verificará su ocupación según la calibración configurada.</p><label>Plaza <select id="vision-plaza"></select></label><div id="vision-zone-info" class="role-banner" style="margin-top:10px">La cámara asignada verificará la ocupación de la plaza seleccionada.</div><div class="grid" style="display:flex;flex-wrap:wrap;gap:12px"><label>X % <input id="vision-x" type="number" value="0" min="0" max="95"></label><label>Y % <input id="vision-y" type="number" value="0" min="0" max="95"></label><label>Ancho % <input id="vision-w" type="number" value="100" min="6" max="100"></label><label>Alto % <input id="vision-h" type="number" value="100" min="6" max="100"></label></div><label>Referencia libre <input id="vision-libre" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><label>Referencia ocupada <input id="vision-ocupada" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><button class="btn" id="vision-calibrar">Guardar recalibración</button><hr><label>Fotografía actual <input id="vision-actual" type="file" accept="image/jpeg,image/png,image/webp" capture="environment"></label><button class="btn" id="vision-procesar">Analizar imagen y actualizar plaza</button></div><div class="card panel"><h3>Estado por sectores sobre imagen</h3><div id="vision-tablero" class="clean-sector-board"></div></div><div class="card panel"><h3>Últimas evaluaciones</h3><div id="vision-historial" class="table-wrap"></div></div>`;
  const $=id=>c.querySelector(id.startsWith('#')?id:'#'+id),notice=(m,err=false)=>{$('vision-msg').textContent=m;$('vision-msg').style.color=err?'#b91c1c':'#087e70'};
  let plazas=[];
- function updateZoneInfo(){
-   const p=plazas.find(x=>x.id===$('vision-plaza').value);
-   if(!p) return;
-   $('vision-zone-info').textContent=`Zona: ${zoneLabel(p.zona_nombre)} · Cámara: ${p.camara_nombre||'No asignada'} · Tipo: ${p.tipo_plaza}`;
- }
- async function refresh(){
-  try{
-    plazas=await api('/ocupacion/estado');
-    const current=$('vision-plaza').value;
-    $('vision-plaza').innerHTML=plazas.map(p=>`<option value="${escape(p.id)}">${escape(zoneLabel(p.zona_nombre))} · ${escape(p.codigo)}</option>`).join('');
-    if(plazas.some(p=>p.id===current))$('vision-plaza').value=current;
-    updateZoneInfo();
-    const grouped=Object.values(plazas.reduce((acc,p)=>{(acc[p.zona_nombre]??=[]).push(p);return acc;},{}));
-    $('vision-tablero').innerHTML=grouped.map(group=>{const zona=group[0].zona_nombre;return `<section class="vision-zone-block"><h4>${escape(zoneLabel(zona))}</h4><div class="vision-zone-grid">${group.map(p=>`<div class="space-card ${p.estado_actual==='OCUPADA'?'occupied':p.estado_actual==='FUERA_SERVICIO'?'out':p.estado_actual==='SIN_DATOS'?'unknown':''}"><div class="space-code">${escape(p.codigo)}</div><div class="space-meta">${escape(p.estado_actual)}<br>Confianza: ${p.confianza??'—'}%<br>${escape(p.camara_nombre||'Sin cámara')}</div></div>`).join('')}</div></section>`;}).join('');
-    const logs=await api('/ocupacion/historial');
-    $('vision-historial').innerHTML=`<table><thead><tr><th>Fecha</th><th>Plaza</th><th>Resultado</th><th>Confianza</th></tr></thead><tbody>${logs.map(v=>`<tr><td>${escape(fecha(v.creado_en))}</td><td>${escape(v.codigo)}</td><td>${escape(v.estado_predicho)}</td><td>${v.confianza??'—'}%</td></tr>`).join('')}</tbody></table>`;
-  }catch(e){notice(e.message,true)}
- }
+ function updateZoneInfo(){ const p=plazas.find(x=>String(x.id)===$('vision-plaza').value); if(!p) return; $('vision-zone-info').textContent=`Zona: ${zoneLabel(p.zona_nombre)} · Cámara: ${p.camara_nombre||'No asignada'} · Tipo: ${p.tipo_plaza}`; }
+ async function refresh(){ try{ plazas=await api('/ocupacion/estado'); const current=$('vision-plaza').value; $('vision-plaza').innerHTML=plazas.map(p=>`<option value="${esc(p.id)}">${esc(zoneLabel(p.zona_nombre))} · ${esc(p.codigo)}</option>`).join(''); if(plazas.some(p=>String(p.id)===current)) $('vision-plaza').value=current; updateZoneInfo(); const groups=Object.values(plazas.reduce((a,p)=>{(a[p.zona_nombre]??=[]).push(p); return a;},{})); const order=['Zona Autoridades - Frente Izquierdo','Zona Administrativa - Frente Derecho','Zona Estudiantes - Sector Trasero']; groups.sort((a,b)=>order.indexOf(a[0].zona_nombre)-order.indexOf(b[0].zona_nombre)); $('vision-tablero').innerHTML=groups.map(board).join(''); const logs=await api('/ocupacion/historial'); $('vision-historial').innerHTML=`<table><thead><tr><th>Fecha</th><th>Plaza</th><th>Resultado</th><th>Confianza</th></tr></thead><tbody>${logs.map(v=>`<tr><td>${esc(fecha(v.creado_en))}</td><td>${esc(v.codigo)}</td><td>${esc(v.estado_predicho)}</td><td>${v.confianza??'—'}%</td></tr>`).join('')}</tbody></table>`; }catch(e){notice(e.message,true)} }
  const id=()=>$('vision-plaza').value,roi=()=>({x:+$('vision-x').value/100,y:+$('vision-y').value/100,w:+$('vision-w').value/100,h:+$('vision-h').value/100});
  $('vision-plaza').onchange=updateZoneInfo;
  $('vision-calibrar').onclick=async()=>{const btn=$('vision-calibrar');btn.disabled=true;try{const imagenLibre=await encode($('vision-libre').files[0]),imagenOcupada=await encode($('vision-ocupada').files[0]);const r=await api('/ocupacion/calibrar',{method:'POST',body:{plazaId:id(),roi:roi(),imagenLibre,imagenOcupada}});notice(r.message);await refresh()}catch(e){notice(e.message,true)}finally{btn.disabled=false}};
  $('vision-procesar').onclick=async()=>{const btn=$('vision-procesar');btn.disabled=true;try{const imagen=await encode($('vision-actual').files[0]);const r=await api('/ocupacion/procesar',{method:'POST',body:{plazaId:id(),imagen}});notice(`${r.plaza}: ${r.estado}. ${r.mensaje} Confianza: ${r.confianza??'no determinada'}%`);await refresh()}catch(e){notice(e.message,true)}finally{btn.disabled=false}};
- await refresh();const timer=setInterval(()=>{if(!c.isConnected || c.dataset.moduloActivo!=='ocupacion'){clearInterval(timer);return}refresh()},12000);
+ await refresh(); const timer=setInterval(()=>{ if(!c.isConnected || c.dataset.moduloActivo!=='ocupacion'){clearInterval(timer); return} refresh() },12000);
 }
