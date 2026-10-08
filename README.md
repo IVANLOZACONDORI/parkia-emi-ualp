@@ -1,3 +1,5 @@
-# PARKIA EMI UALP V10 — Supervisión y mapa global de guardia
+# PARKIA EMI UALP V13
 
-Incluye los módulos previos de V9 y el panel de supervisión por zona con detalle de plazas, cámaras y alertas. Ver documentación en `docs/REQUISITOS_MODULO_8_V10.md`.
+Actualización acumulativa de la V12. Corrige el selector duplicado del panel de supervisión y desarrolla consultas de historial con filtros, paginación, reconstrucción y resguardo por permisos.
+
+Guías: `docs/ACTUALIZAR_GITHUB_V13.md` y `docs/REQUISITOS_MODULO_10_V13.md`.

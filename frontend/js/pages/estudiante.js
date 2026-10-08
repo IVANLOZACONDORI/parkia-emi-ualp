@@ -29,21 +29,24 @@ function contenido(c,d){
   root.append(elemento('p','student-note','Información exclusiva de la Zona Estudiantes – Sector Trasero. Los estados reflejan el último registro disponible.'));
   c.replaceChildren(root);
 }
+export function detenerConsultaEstudiante(){
+  if (teardown) { teardown(); teardown=null; }
+}
 export async function renderEstudiante(c){
-  if(teardown)teardown();
+  detenerConsultaEstudiante();
   let activo=true,trabajando=false,timer;
   const titulo=elemento('div','card panel student-loading','Consultando disponibilidad de tu zona...');c.replaceChildren(titulo);
   async function cargar(){
     if(!activo||trabajando||document.hidden)return;
     trabajando=true;
-    try {const data=await api('/estudiante/mi-parqueo');if(activo&&c.isConnected)contenido(c,data);}
-    catch(e){if(activo&&c.isConnected){
+    try {const data=await api('/estudiante/mi-parqueo');if(activo&&c.isConnected&&c.dataset.moduloActivo==='mi-parqueo')contenido(c,data);}
+    catch(e){if(activo&&c.isConnected&&c.dataset.moduloActivo==='mi-parqueo'){
       // No comunicar 'espacios disponibles' ante pérdida de conexión.
       const error=elemento('div','card panel student-error');error.append(elemento('h2','','Disponibilidad no confirmada'),elemento('p','',e.message||'No se pudo actualizar la información.'));
       c.replaceChildren(error);
     }}finally{trabajando=false;}
   }
-  await cargar();timer=setInterval(cargar,5000);
+  await cargar();if(!activo || c.dataset.moduloActivo!=='mi-parqueo')return;timer=setInterval(cargar,5000);
   const onVisible=()=>{if(!document.hidden)cargar();};document.addEventListener('visibilitychange',onVisible);
   teardown=()=>{activo=false;clearInterval(timer);document.removeEventListener('visibilitychange',onVisible);};
 }

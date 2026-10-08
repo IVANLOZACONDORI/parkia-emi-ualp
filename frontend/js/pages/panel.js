@@ -7,7 +7,7 @@ let generation=0;
 export async function renderPanel(c,u){
  const gen=++generation;let zonaId=null;let busy=false;
  c.innerHTML=`<div class="page-head"><div><h1>Supervisión de parqueos</h1><p>Disponibilidad general y seguimiento de sectores · ${esc(u.nombreRol)}</p></div><button class="btn" id="super-refresh">Actualizar</button></div><div id="super-status" class="role-banner" role="status">Consultando disponibilidad...</div><div id="super-metrics" class="kpis"></div><div class="grid-2"><section class="card panel"><h3>Parqueos separados por zona</h3><div id="super-zones"></div></section><section class="card panel"><h3>Cámaras y alertas relevantes</h3><div id="super-alerts"></div></section></div><section class="card panel"><h3 id="super-zone-title">Detalle de un parqueo</h3><div id="super-details" class="empty">Seleccione un sector para consultar sus plazas, cámaras y alertas.</div></section>`;
- const $=id=>c.querySelector('#'+id);
+ const $=id=>c.querySelector(id.startsWith('#')?id:'#'+id);
  const alive=()=>gen===generation && c.isConnected && !!$('#super-status');
  async function showZone(id){
   zonaId=id;

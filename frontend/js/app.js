@@ -1,6 +1,6 @@
 import { api, sesion, tienePermiso } from './api.js';
 import { renderPanel } from './pages/panel.js';
-import { renderEstudiante } from './pages/estudiante.js';
+import { renderEstudiante, detenerConsultaEstudiante } from './pages/estudiante.js';
 import { renderVehiculos } from './pages/vehiculos.js';
 import { renderAccesos } from './pages/accesos.js';
 import { renderParqueos } from './pages/parqueos.js';
@@ -82,24 +82,35 @@ async function iniciarAplicacion() {
     }
   }
 
+  let navigationVersion = 0;
   async function navegar(m) {
     if (!m) return;
+    const thisVersion=++navigationVersion;
+    detenerConsultaEstudiante();
+    c.dataset.moduloActivo=m.id;
     document.querySelectorAll('.menu-item').forEach(x => x.classList.toggle('active', x.dataset.id === m.id));
     history.replaceState(null, '', `#${m.id}`);
     c.innerHTML = '<div class="empty">Cargando módulo...</div>';
     try {
       await m.render();
     } catch (e) {
-      c.innerHTML = `<div class="card panel"><h3>No se pudo cargar el módulo</h3><p>${e.message}</p></div>`;
+      if(thisVersion===navigationVersion && c.dataset.moduloActivo===m.id){
+        c.replaceChildren();const card=document.createElement('div');card.className='card panel';
+        const h=document.createElement('h3');h.textContent='No se pudo cargar el módulo';
+        const p=document.createElement('p');p.textContent=e.message||'Intente nuevamente.';
+        card.append(h,p);c.append(card);
+      }
     }
     document.getElementById('sidebar').classList.remove('open');
   }
 
   const wanted = location.hash.slice(1);
-  const initial = modulos.find(m => m.id === wanted) || modulos[0];
+  const defaultId = u.rol === 'ESTUDIANTE' ? 'mi-parqueo' : 'panel';
+  const initial = modulos.find(m => m.id === wanted) || modulos.find(m=>m.id===defaultId) || modulos[0];
   if (initial) navegar(initial);
   else c.innerHTML = '<div class="card panel"><h3>Sin módulos asignados</h3><p>Contacte al administrador del sistema.</p></div>';
 
+  window.addEventListener('hashchange',()=>{const requested=location.hash.slice(1);const target=modulos.find(m=>m.id===requested);if(target && c.dataset.moduloActivo!==target.id)void navegar(target);});
   document.getElementById('logout').onclick = cerrarSesion;
   document.getElementById('menuBtn').onclick = () => document.getElementById('sidebar').classList.toggle('open');
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
