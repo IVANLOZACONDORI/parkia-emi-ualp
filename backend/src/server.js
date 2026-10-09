@@ -16,6 +16,7 @@ async function iniciar() {
     const fs=await import('node:fs/promises');
     await query(await fs.readFile(new URL('../sql/05_auditoria_v15.sql', import.meta.url),'utf8'));
     await query(await fs.readFile(new URL('../sql/06_mapeo_real_v17.sql', import.meta.url),'utf8'));
+    await query(await fs.readFile(new URL('../sql/07_mapa_rectangulos_v26.sql', import.meta.url),'utf8'));
     iniciarVerificadorAlertas();
     app.listen(env.port, () => console.log(`PARKIA EMI UALP disponible en http://localhost:${env.port}`));
   } catch (error) {
